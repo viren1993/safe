@@ -4,32 +4,34 @@ import Link from "next/link";
 import React, { useState } from "react";
 import { Routes } from "../config/routes";
 import "react-datepicker/dist/react-datepicker.css";
-import { Formik, Form, Field } from "formik";
+import { Formik, Form, Field, useField } from "formik";
 import DatePicker from "react-datepicker";
-
-// import Safedetails from "./safedetails";
-// import Companydetails from "./companydetails";
-// import Review from "./review";
-// import Investordetails from "./Investordetails";
-// import Success from "./success";
 import validationSchema from "./validationSchema";
 
-// function _renderStepContent(step) {
-//   switch (step) {
-//     case 0:
-//       return <Safedetails />;
-//     case 1:
-//       return <Companydetails />;
-//     case 2:
-//       return <Investordetails />;
-//     case 3:
-//       return <Review />;
-//     case 4:
-//       return <Success />;
-//     default:
-//       return null;
-//   }
-// }
+const formInitialValues = {
+  money: "",
+  address: "",
+  investmentamount: "",
+  investmentdate: null,
+  valuation: false,
+  valuationcapnumber: "",
+  discount: false,
+  discountnumber: "",
+  prorate: false,
+  favoured: false,
+  companylegalname: "",
+  companyaddress: "",
+  country: "",
+  state: "",
+  benificial: "",
+  benificialowner: "",
+  investortype:"",
+  investorlegal: "",
+  authorized: "",
+  signatory:"",
+  addressoptional: "",
+  bylines: "",
+};
 
 const tabs = [
   {
@@ -55,10 +57,10 @@ const tabs = [
 ];
 
 export default function Safe() {
-  const [startDate, setStartDate] = useState(new Date());
+  // const [startDate, setStartDate] = useState(new Date());
   const [activeStep, setActiveStep] = useState(0);
   const currentValidationSchema = validationSchema[activeStep];
-  const isLastStep = activeStep === tabs.length - 1
+  const isLastStep = activeStep === tabs.length - 1;
 
   function _sleep(ms) {
     return new Promise((resolve) => setTimeout(resolve, ms));
@@ -73,6 +75,7 @@ export default function Safe() {
   }
 
   function _handleSubmit(values, actions) {
+    console.log(values, "value");
     if (isLastStep) {
       _submitForm(values, actions);
     } else {
@@ -169,11 +172,8 @@ export default function Safe() {
                     )}
                     <button
                       className={`${
-                        activeStep === item.id
-                          ? "text-white"
-                          : "text-[#3F3F3F]"
+                        activeStep === item.id ? "text-white" : "text-[#3F3F3F]"
                       } md:text-2xl md:pl-7 pl-6 md:pb-0 pb-4 whitespace-nowrap	text-md font-medium md:leading-10 leading-8`}
-                      onClick={() => setActiveStep(item.id)}
                     >
                       {item.title}
                     </button>
@@ -184,10 +184,7 @@ export default function Safe() {
             <div>
               <div className="grid grid-cols-1 md:w-[44%] w-full">
                 <Formik
-                  initialValues={{
-                    address: "",
-                    investmentamount: "",
-                  }}
+                  initialValues={formInitialValues}
                   validationSchema={currentValidationSchema}
                   onSubmit={_handleSubmit}
                 >
@@ -197,7 +194,7 @@ export default function Safe() {
                         <div className="step 1">
                           <div className="flex input-border justify-between relative cursor-pointer mb-3 items-center rounded-lg border border-1 px-[20px] md:px-[28px] py-[13px]">
                             <div className="flex items-center">
-                              <input
+                              <Field
                                 name="money"
                                 type="radio"
                                 id="premoney"
@@ -215,9 +212,9 @@ export default function Safe() {
                             </span>
                           </div>
 
-                          <div className="flex input-border justify-between relative cursor-pointer mb-3 items-center rounded-lg border border-1 px-[20px] md:px-[28px] py-[13px]">
+                          <div className="flex input-border justify-between relative cursor-pointer items-center rounded-lg border border-1 px-[20px] md:px-[28px] py-[13px]">
                             <div className="flex items-center">
-                              <input
+                              <Field
                                 id="postmoney"
                                 name="money"
                                 type="radio"
@@ -231,13 +228,17 @@ export default function Safe() {
                                 Post-money
                               </label>
                             </div>
-
                             <span className="text-sm">
                               After cash investment
                             </span>
                           </div>
+                          {errors.money && touched.money ? (
+                            <p className="text-red-500 text-xs mt-2">
+                              {errors.money}
+                            </p>
+                          ) : null}
 
-                          <div className="from group mb-3">
+                          <div className="from group mb-3 mt-3">
                             <label
                               htmlFor="address"
                               className="flex font-medium mb-[10px] items-center text-white text-xs"
@@ -285,120 +286,195 @@ export default function Safe() {
                               >
                                 Investment Date
                               </label>
-                              <DatePicker
-                                className="w-full input-border shadow-sm inline-flex cursor-pointer items-center align-middle rounded-lg border border-1 px-[20px] md:px-[28px] py-[13px]"
-                                selected={startDate}
-                                onChange={(date) => setStartDate(date)}
-                                dateFormat="MMMM d, yyyy"
-                                name="investmentdate"
-                              />
+                              <Field name="investmentdate">
+                                {({ field, form }) => (
+                                  <DatePicker
+                                    className="w-full input-border shadow-sm inline-flex cursor-pointer items-center align-middle rounded-lg border border-1 px-[20px] md:px-[28px] py-[13px]"
+                                    id="investmentdate"
+                                    {...field}
+                                    selected={field.value}
+                                    onChange={(date) =>
+                                      form.setFieldValue(field.name, date)
+                                    }
+                                    dateFormat="MMMM d, yyyy"
+                                    name="investmentdate"
+                                  />
+                                )}
+                              </Field>
+                              {errors.investmentdate &&
+                              touched.investmentdate ? (
+                                <p className="text-red-500 text-xs mt-2">
+                                  {errors.investmentdate}
+                                </p>
+                              ) : null}
                             </div>
                           </div>
+
                           <div className="flex flex-nowrap mb-3">
-                            <div className="from-group flex mr-[38px] h-[50px] w-[50%] items-center">
-                              <input
-                                type="checkbox"
-                                id="valuation"
-                                className="sr-only peer"
-                              />
-                              <div className="block relative bg-white w-12 h-[22px] p-[2px] rounded-full before:absolute before:bg-[#A9A9A9] before:w-[18px] before:h-[18px] before:p-[2px] before:rounded-full before:transition-all before:duration-500 before:left-1 peer-checked:before:left-7 peer-checked:before:bg-[#8B2DC5]"></div>
+                            <div className="from-group  mr-[38px] h-[50px] w-[50%] items-center">
                               <label
                                 htmlFor="valuation"
-                                className="leading-5 pl-4 font-medium text-sm md:text-base"
+                                className="flex pt-3 leading-5 font-medium text-sm md:text-base"
                               >
+                                <Field
+                                  type="checkbox"
+                                  id="valuation"
+                                  name="valuation"
+                                  className="sr-only peer"
+                                />
+                                <div className="block mr-3 relative bg-white w-12 h-[22px] p-[2px] rounded-full before:absolute before:bg-[#A9A9A9] before:w-[18px] before:h-[18px] before:p-[2px] before:rounded-full before:transition-all before:duration-500 before:left-1 peer-checked:before:left-7 peer-checked:before:bg-[#8B2DC5]"></div>
                                 Valuation cap
                               </label>
+
+                              {errors.valuation && touched.valuation ? (
+                                <p className="text-red-500 text-xs mt-6">
+                                  {errors.valuation}
+                                </p>
+                              ) : null}
                             </div>
-                            <div className="from-group mr-[18px] h-[50px] w-[50%]">
-                              <div className="from group">
-                                <input
-                                  type="number"
-                                  name="valuationcap"
-                                  className="input-border shadow-sm inline-flex w-full cursor-pointer items-center align-middle rounded-lg border border-1 px-[20px] md:px-[28px] py-[13px]"
-                                />
-                              </div>
+                            <div className="from group">
+                              <Field
+                                type="number"
+                                name="valuationcapnumber"
+                                className="input-border shadow-sm inline-flex w-full cursor-pointer items-center align-middle rounded-lg border border-1 px-[20px] md:px-[28px] py-[13px]"
+                              />
+                              {errors.valuationcapnumber &&
+                              touched.valuationcapnumber ? (
+                                <p className="text-red-500 text-xs mt-2">
+                                  {errors.valuationcapnumber}
+                                </p>
+                              ) : null}
                             </div>
                           </div>
-                          <div className="flex flex-nowrap mb-[20px]">
-                            <div className="from-group flex mr-[38px] w-[50%] items-center">
-                              <input
-                                type="checkbox"
-                                id="Discount"
-                                className="sr-only peer"
-                              />
-                              <div className="block relative bg-white w-12 h-[22px] p-[2px] rounded-full before:absolute before:bg-[#A9A9A9] before:w-[18px] before:h-[18px] before:p-[2px] before:rounded-full before:transition-all before:duration-500 before:left-1 peer-checked:before:left-7 peer-checked:before:bg-[#8B2DC5]"></div>
+
+                          <div className="flex flex-nowrap mb-3">
+                            <div className="from-group  mr-[38px] h-[50px] w-[50%] items-center">
                               <label
-                                htmlFor="Discount"
-                                className="leading-5 pl-4 font-medium text-sm md:text-base"
+                                htmlFor="discount"
+                                className="flex pt-3 leading-5 font-medium text-sm md:text-base"
                               >
+                                <Field
+                                  type="checkbox"
+                                  id="discount"
+                                  name="discount"
+                                  className="sr-only peer"
+                                />
+                                <div className="block mr-3 relative bg-white w-12 h-[22px] p-[2px] rounded-full before:absolute before:bg-[#A9A9A9] before:w-[18px] before:h-[18px] before:p-[2px] before:rounded-full before:transition-all before:duration-500 before:left-1 peer-checked:before:left-7 peer-checked:before:bg-[#8B2DC5]"></div>
                                 Discount
                               </label>
+
+                              {errors.discount && touched.discount ? (
+                                <p className="text-red-500 text-xs mt-6">
+                                  {errors.discount}
+                                </p>
+                              ) : null}
                             </div>
-                            <div className="from-group mr-[18px] w-[50%]">
-                              <div className="from group">
-                                <input
-                                  type="number"
-                                  name="discount"
-                                  className="input-border shadow-sm inline-flex w-full cursor-pointer items-center align-middle rounded-lg border border-1 px-[20px] md:px-[28px] py-[13px]"
-                                />
-                              </div>
+                            <div className="from group">
+                              <Field
+                                type="number"
+                                name="discountnumber"
+                                className="input-border shadow-sm inline-flex w-full cursor-pointer items-center align-middle rounded-lg border border-1 px-[20px] md:px-[28px] py-[13px]"
+                              />
+                              {errors.discountnumber &&
+                              touched.discountnumber ? (
+                                <p className="text-red-500 text-xs mt-2">
+                                  {errors.discountnumber}
+                                </p>
+                              ) : null}
                             </div>
                           </div>
-                          <p className="flex items-center cursor-pointer text-xs mb-5">
+
+                          <p className="flex items-center cursor-pointer text-xs pt-4 mb-5">
                             Addendums
                           </p>
-                          <div className="from-group flex items-center mb-7">
-                            <input
-                              type="checkbox"
-                              id="prorate"
-                              className="sr-only peer"
-                            />
-                            <div className="block relative bg-white w-12 h-[22px] p-[2px] rounded-full before:absolute before:bg-[#A9A9A9] before:w-[18px] before:h-[18px] before:p-[2px] before:rounded-full before:transition-all before:duration-500 before:left-1 peer-checked:before:left-7 peer-checked:before:bg-[#8B2DC5]"></div>
+
+                          <div className="from-group mb-7">
                             <label
                               htmlFor="prorate"
-                              className="leading-5 pl-4 font-medium text-sm md:text-base"
+                              className="flex pt-3 leading-5 font-medium text-sm md:text-base"
                             >
+                              <Field
+                                type="checkbox"
+                                id="prorate"
+                                name="prorate"
+                                className="sr-only peer"
+                              />
+                              <div className="block mr-3 relative bg-white w-12 h-[22px] p-[2px] rounded-full before:absolute before:bg-[#A9A9A9] before:w-[18px] before:h-[18px] before:p-[2px] before:rounded-full before:transition-all before:duration-500 before:left-1 peer-checked:before:left-7 peer-checked:before:bg-[#8B2DC5]"></div>
                               Pro-Rata Rights Letter
                             </label>
+
+                            {errors.prorate && touched.prorate ? (
+                              <p className="text-red-500 text-xs mt-4">
+                                {errors.prorate}
+                              </p>
+                            ) : null}
                           </div>
-                          <div className="from-group flex items-center mb-6">
-                            <input
-                              type="checkbox"
-                              id="mostfavoured"
-                              className="sr-only peer"
-                            />
-                            <div className="block relative bg-white w-12 h-[22px] p-[2px] rounded-full before:absolute before:bg-[#A9A9A9] before:w-[18px] before:h-[18px] before:p-[2px] before:rounded-full before:transition-all before:duration-500 before:left-1 peer-checked:before:left-7 peer-checked:before:bg-[#8B2DC5]"></div>
+
+                          <div className="from-group mb-6">
                             <label
-                              htmlFor="mostfavoured"
-                              className="leading-5 pl-4 font-medium text-sm md:text-base"
+                              htmlFor="favoured"
+                              className="flex pt-3 leading-5 font-medium text-sm md:text-base"
                             >
+                              <Field
+                                type="checkbox"
+                                id="favoured"
+                                name="favoured"
+                                className="sr-only peer"
+                              />
+                              <div className="block mr-3 relative bg-white w-12 h-[22px] p-[2px] rounded-full before:absolute before:bg-[#A9A9A9] before:w-[18px] before:h-[18px] before:p-[2px] before:rounded-full before:transition-all before:duration-500 before:left-1 peer-checked:before:left-7 peer-checked:before:bg-[#8B2DC5]"></div>
                               Most-Favoured Nation
                             </label>
+
+                            {errors.favoured && touched.favoured ? (
+                              <p className="text-red-500 text-xs mt-4">
+                                {errors.favoured}
+                              </p>
+                            ) : null}
                           </div>
                         </div>
                       )}
                       {activeStep === 1 && (
                         <>
-                          <div className="from group mb-3">
-                            <label className="flex font-medium mb-[10px] items-center text-white text-xs">
+                          <div className="from group mb-3 mt-3">
+                            <label
+                              htmlFor="companylegalname"
+                              className="flex font-medium mb-[10px] items-center text-white text-xs"
+                            >
                               Company legal name
                             </label>
-                            <input
+                            <Field
                               type="text"
                               name="companylegalname"
+                              id="companylegalname"
                               className="input-border shadow-sm inline-flex w-full cursor-pointer items-center align-middle rounded-lg border border-1 px-[20px] md:px-[28px] py-[13px]"
                             />
+                            {errors.companylegalname &&
+                            touched.companylegalname ? (
+                              <p className="text-red-500 text-xs mt-2">
+                                {errors.companylegalname}
+                              </p>
+                            ) : null}
                           </div>
-                          <div className="from group mb-3">
-                            <label className="flex font-medium mb-[10px] items-center text-white text-xs">
+                          <div className="from group mb-3 mt-3">
+                            <label
+                              htmlFor="companyaddress"
+                              className="flex font-medium mb-[10px] items-center text-white text-xs"
+                            >
                               Company address
                             </label>
-                            <input
+                            <Field
                               type="text"
                               name="companyaddress"
+                              id="companyaddress"
                               className="input-border shadow-sm inline-flex w-full cursor-pointer items-center align-middle rounded-lg border border-1 px-[20px] md:px-[28px] py-[13px]"
                             />
+                            {errors.companyaddress && touched.companyaddress ? (
+                              <p className="text-red-500 text-xs mt-2">
+                                {errors.companyaddress}
+                              </p>
+                            ) : null}
                           </div>
+
                           <div className="mb-3 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
                             <div className="sm:col-span-12 md:col-span-3">
                               <label
@@ -408,47 +484,90 @@ export default function Safe() {
                                 State of incorporation
                               </label>
                               <div className="mt-2">
-                                <select
+                                <Field
+                                  as="select"
                                   id="country"
                                   name="country"
                                   className="block bg-[#3d246617] border-[#363637] fouce:border-[#363637] w-full rounded-md border-0 shadow-sm ring-1 ring-inset px-[20px] md:px-[28px] py-[13px] focus:ring-2 ring-[#363637] focus:ring-inset focus:ring-[#363637] sm:max-w-xs sm:text-sm sm:leading-6"
                                 >
-                                  <option className="text-[#363637]">
+                                  <option value="" label="Select a country">
+                                    {" "}
+                                    Select a country{" "}
+                                  </option>
+                                  <option
+                                    value="USA"
+                                    label="USA"
+                                    className="text-[#363637]"
+                                  >
                                     USA
                                   </option>
-                                  <option className="text-[#363637]">
+                                  <option
+                                    value="Canada"
+                                    label="Canada"
+                                    className="text-[#363637]"
+                                  >
                                     Canada
                                   </option>
-                                  <option className="text-[#363637]">
+                                  <option
+                                    value="Mexico"
+                                    label="Mexico"
+                                    className="text-[#363637]"
+                                  >
                                     Mexico
                                   </option>
-                                </select>
+                                </Field>
                               </div>
+                              {errors.country && touched.country ? (
+                                <p className="text-red-500 text-xs mt-2">
+                                  {errors.country}
+                                </p>
+                              ) : null}
                             </div>
                             <div className="sm:col-span-12 md:col-span-3">
                               <label
-                                htmlFor="State"
+                                htmlFor="state"
                                 className="flex font-medium mb-[10px] items-center text-white text-xs"
                               >
                                 State of governance
                               </label>
                               <div className="mt-2">
-                                <select
-                                  id="State"
-                                  name="State"
+                                <Field
+                                  as="select"
+                                  id="state"
+                                  name="state"
                                   className="block bg-[#3d246617] border-[#363637] fouce:border-[#363637] w-full rounded-md border-0 shadow-sm ring-1 ring-inset px-[20px] md:px-[28px] py-[13px] focus:ring-2 ring-[#363637] focus:ring-inset focus:ring-[#363637] sm:max-w-xs sm:text-sm sm:leading-6"
                                 >
-                                  <option className="text-[#363637]">
+                                  <option value="" label="Select a state">
+                                    Select a country
+                                  </option>
+                                  <option
+                                    value="USA"
+                                    label="USA"
+                                    className="text-[#363637]"
+                                  >
                                     USA
                                   </option>
-                                  <option className="text-[#363637]">
+                                  <option
+                                    value="Canada"
+                                    label="Canada"
+                                    className="text-[#363637]"
+                                  >
                                     Canada
                                   </option>
-                                  <option className="text-[#363637]">
+                                  <option
+                                    value="Mexico"
+                                    label="Mexico"
+                                    className="text-[#363637]"
+                                  >
                                     Mexico
                                   </option>
-                                </select>
+                                </Field>
                               </div>
+                              {errors.state && touched.state ? (
+                                <p className="text-red-500 text-xs mt-2">
+                                  {errors.state}
+                                </p>
+                              ) : null}
                             </div>
                           </div>
                           <hr className="bg-[#1D1D1D] mb-4 border-1 border-[#1D1D1D]" />
@@ -462,34 +581,54 @@ export default function Safe() {
                             >
                               Benificial owner name ( As a signatory )
                             </label>
-                            <input
+                            <Field
                               type="text"
                               name="benificial"
                               className="input-border shadow-sm inline-flex w-full cursor-pointer items-center align-middle rounded-lg border border-1 px-[20px] md:px-[28px] py-[13px]"
                             />
+                            {errors.benificial && touched.benificial ? (
+                              <p className="text-red-500 text-xs mt-2">
+                                {errors.benificial}
+                              </p>
+                            ) : null}
                           </div>
                           <div className="col-span-full w-full mb-3">
                             <label
-                              htmlFor="benificial"
+                              htmlFor="benificialowner"
                               className="flex font-medium mb-[10px] items-center text-white text-xs"
                             >
                               Benificial owner title
                             </label>
-                            <select
-                              id="country"
-                              name="country"
+                            <Field
+                              as="select"
+                              id="benificialowner"
+                              name="benificialowner"
                               className="block bg-[#3d246617] border-[#363637] fouce:border-[#363637] w-full rounded-md border-0 shadow-sm ring-1 ring-inset px-[20px] md:px-[28px] py-[13px] focus:ring-2 ring-[#363637] focus:ring-inset focus:ring-[#363637] sm:max-w-xs sm:text-sm sm:leading-6"
                             >
-                              <option className="text-[#363637]">
+                              <option value="" label="Select a benificialowner">
+                                Select a benificialowner
+                              </option>
+                              <option
+                                value="CEO ( Chief executive Officer )"
+                                label="CEO ( Chief executive Officer )"
+                                className="text-[#363637]"
+                              >
                                 CEO ( Chief executive Officer )
                               </option>
-                              <option className="text-[#363637]">
-                                CEO ( Chief executive Officer )
+                              <option
+                                value="CEO1 ( Chief executive Officer )"
+                                label="CEO1 ( Chief executive Officer )"
+                                className="text-[#363637]"
+                              >
+                                CEO1 ( Chief executive Officer )
                               </option>
-                              <option className="text-[#363637]">
-                                CEO ( Chief executive Officer )
-                              </option>
-                            </select>
+                            </Field>
+                            {errors.benificialowner &&
+                            touched.benificialowner ? (
+                              <p className="text-red-500 text-xs mt-2">
+                                {errors.benificialowner}
+                              </p>
+                            ) : null}
                           </div>
                         </>
                       )}
@@ -502,35 +641,58 @@ export default function Safe() {
                             >
                               Investor type
                             </label>
-                            <select
+                            <Field
+                              as="select"
                               id="investortype"
                               name="investortype"
                               className="block bg-[#3d246617] border-[#363637] fouce:border-[#363637] w-full rounded-md border-0 shadow-sm ring-1 ring-inset px-[20px] md:px-[28px] py-[13px] focus:ring-2 ring-[#363637] focus:ring-inset focus:ring-[#363637] sm:max-w-xs sm:text-sm sm:leading-6"
                             >
-                              <option className="text-[#363637]">
+                              <option
+                                value=""
+                                label="Select a investor type"
+                                className="text-[#363637]"
+                              >
                                 Investor type
                               </option>
-                              <option className="text-[#363637]">
-                                Investor type
+                              <option
+                                value="Investor type 1"
+                                label="Investor type 1"
+                                className="text-[#363637]"
+                              >
+                                Investor type 1
                               </option>
-                              <option className="text-[#363637]">
-                                Investor type
+                              <option
+                                value="Investor type 2"
+                                label="Investor type 2"
+                                className="text-[#363637]"
+                              >
+                                Investor type 2
                               </option>
-                            </select>
+                            </Field>
+                            {errors.investortype && touched.investortype ? (
+                              <p className="text-red-500 text-xs mt-2">
+                                {errors.investortype}
+                              </p>
+                            ) : null}
                           </div>
                           <div className="col-span-full mb-3">
                             <label
-                              htmlFor="legal"
+                              htmlFor="investorlegal"
                               className="flex font-medium mb-[10px] items-center text-[#C0C0C0] text-xs"
                             >
                               Investor (Legal entity name)
                             </label>
-                            <input
+                            <Field
                               type="text"
-                              name="legal"
-                              id="legal"
+                              name="investorlegal"
+                              id="investorlegal"
                               className="input-border shadow-sm inline-flex w-full focus:ring-2 focus:ring-inset focus:ring-[#f0e9e9] cursor-pointer items-center align-middle rounded-lg border border-1 px-[20px] md:px-[28px] py-[13px]"
                             />
+                            {errors.investorlegal && touched.investorlegal ? (
+                              <p className="text-red-500 text-xs mt-2">
+                                {errors.investorlegal}
+                              </p>
+                            ) : null}
                           </div>
                           <div className="col-span-full mb-3">
                             <label
@@ -539,12 +701,17 @@ export default function Safe() {
                             >
                               Name of authorized signatory
                             </label>
-                            <input
+                            <Field
                               type="text"
                               name="authorized"
                               id="authorized"
                               className="input-border shadow-sm inline-flex w-full focus:ring-2 focus:ring-inset focus:ring-[#f0e9e9] cursor-pointer items-center align-middle rounded-lg border border-1 px-[20px] md:px-[28px] py-[13px]"
                             />
+                            {errors.authorized && touched.authorized ? (
+                              <p className="text-red-500 text-xs mt-2">
+                                {errors.authorized}
+                              </p>
+                            ) : null}
                           </div>
                           <div className="col-span-full mb-3">
                             <label
@@ -553,26 +720,27 @@ export default function Safe() {
                             >
                               Signatory title (optional){" "}
                             </label>
-                            <input
+                            <Field
                               type="text"
                               name="signatory"
                               id="signatory"
                               className="input-border shadow-sm inline-flex w-full focus:ring-2 focus:ring-inset focus:ring-[#f0e9e9] cursor-pointer items-center align-middle rounded-lg border border-1 px-[20px] md:px-[28px] py-[13px]"
-                            />
+                            />                    
                           </div>
                           <div className="col-span-full mb-3">
                             <label
-                              htmlFor="address"
+                              htmlFor="addressoptional"
                               className="flex font-medium mb-[10px] items-center text-[#C0C0C0] text-xs"
                             >
                               Address (optional)
                             </label>
-                            <textarea
+                            <Field 
                               type="text"
-                              name="address"
-                              id="address"
+                              as="textarea"
+                              name="addressoptional"
+                              id="addressoptional"
                               className="input-border shadow-sm inline-flex w-full focus:ring-2 focus:ring-inset focus:ring-[#f0e9e9] cursor-pointer items-center align-middle rounded-lg border border-1 px-[20px] md:px-[28px] py-[13px]"
-                            />
+                            />                            
                           </div>
                           <div className="col-span-full mb-3">
                             <label
@@ -581,7 +749,8 @@ export default function Safe() {
                             >
                               Additional bylines (optional)
                             </label>
-                            <textarea
+                            <Field
+                              as="textarea"
                               type="text"
                               name="bylines"
                               id="bylines"
@@ -728,11 +897,24 @@ export default function Safe() {
                             </svg>
                           </div>
                           <hr className="bg-[#1D1D1D] mb-4 border-1 border-[#1D1D1D]" />
+                        </div>
+                      )}
+                      <div className="flex">
+                        {!(activeStep === 0 || activeStep === 4) && (
+                          <button
+                            onClick={() => _handleBack()}
+                            type="button"
+                            className="inline-flex w-[120px] mr-3 items-center wallet-button justify-center transition border border-1 text-base font-semibold duration-200 capitalize text-white rounded-lg md:text-base px-[28px] py-[12px] md:px-[28px] md:py-[13px]"
+                          >
+                            Back
+                          </button>
+                        )}
+                        {!(activeStep === 3 || activeStep === 4) && (
                           <button
                             type="submit"
-                            className="inline-flex items-center wallet-button justify-center transition border border-1 text-base font-semibold leading-10 duration-200 capitalize text-white rounded-lg px-10 py-3 md:text-base 4xl:px-8 4xl:py-2.5"
+                            className="inline-flex w-[138px] items-center wallet-button justify-center transition border border-1 text-base font-semibold duration-200 capitalize text-white rounded-lg md:text-base px-[28px] py-[12px] md:px-[28px] md:py-[13px]"
                           >
-                            <span className="pr-5">Create more SAFE</span>
+                            <span className="pr-2">{activeStep === 2 ? 'Review' : 'Next'}</span>
                             <svg
                               xmlns="http://www.w3.org/2000/svg"
                               width="15"
@@ -746,26 +928,33 @@ export default function Safe() {
                               />
                             </svg>
                           </button>
-                        </div>
-                      )}
-                      <div className="flex">
-                        {!(activeStep === 1 || activeStep === 5) && (
+                        )}
+                        {(activeStep === 3) && (
                           <button
-                            onClick={() => _handleBack()}
-                            type="button"
-                            className="inline-flex w-[116px] mr-3 items-center wallet-button justify-center transition border border-1 text-base font-semibold leading-10 duration-200 capitalize text-white rounded-lg px-10 py-3 md:text-base 4xl:px-8 4xl:py-2.5"
+                            type="submit"
+                            className="inline-flex w-[180px] items-center wallet-button justify-center transition border border-1 text-base font-semibold duration-200 capitalize text-white rounded-lg md:text-base px-[28px] py-[12px] md:px-[28px] md:py-[13px]"
                           >
-                            Back
+                            <span className="pr-2">Create SAFE</span>
+                            <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              width="15"
+                              height="12"
+                              viewBox="0 0 15 12"
+                              fill="none"
+                            >
+                              <path
+                                d="M0.806474 6.62535L0.819926 5.20109L11.517 5.30212L8.22009 1.94238L9.23974 0.941815L14.2426 6.04005L9.14434 11.0429L8.14377 10.0232L11.5035 6.72637L0.806474 6.62535Z"
+                                fill="#825EAE"
+                              />
+                            </svg>
                           </button>
                         )}
-                        {!(activeStep === 5) && (
+                        {(activeStep === 4) && (
                           <button
-                            // onClick={() => handleNext()}
-                            // disabled={isSubmitting}
                             type="submit"
-                            className="inline-flex w-[138px] items-center wallet-button justify-center transition border border-1 text-base font-semibold leading-10 duration-200 capitalize text-white rounded-lg px-10 py-3 md:text-base 4xl:px-8 4xl:py-2.5"
+                            className="inline-flex  items-center wallet-button justify-center transition border border-1 text-base font-semibold duration-200 capitalize text-white rounded-lg md:text-base px-[28px] py-[12px] md:px-[28px] md:py-[13px]"
                           >
-                            <span className="pr-2">Next</span>
+                            <span className="pr-2">Create more SAFE</span>
                             <svg
                               xmlns="http://www.w3.org/2000/svg"
                               width="15"
