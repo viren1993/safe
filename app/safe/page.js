@@ -7,12 +7,20 @@ import "react-datepicker/dist/react-datepicker.css";
 import { Formik, Form, Field } from "formik";
 import DatePicker from "react-datepicker";
 import validationSchema from "./validationSchema";
-import { ConnectWallet, metamaskWallet, walletConnect, trustWallet, useContract, useAddress, ThirdwebProvider } from "@thirdweb-dev/react";
+import {
+  ConnectWallet,
+  metamaskWallet,
+  walletConnect,
+  trustWallet,
+  useContract,
+  useAddress,
+  ThirdwebProvider,
+} from "@thirdweb-dev/react";
 import moment from "moment";
 import axios from "axios";
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-import { Bars } from 'react-loader-spinner';
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { Bars } from "react-loader-spinner";
 
 const formInitialValues = {
   money: "",
@@ -79,7 +87,6 @@ export default function Safe() {
   );
   const MMaddress = useAddress();
 
-
   function _sleep(ms) {
     return new Promise((resolve) => setTimeout(resolve, ms));
   }
@@ -88,8 +95,6 @@ export default function Safe() {
     await _sleep(1000);
     actions.setSubmitting(false);
   }
-
-
 
   useEffect(() => {
     setSafefinaldata({
@@ -118,14 +123,13 @@ export default function Safe() {
     });
   }, [safeformdata, setdate]);
 
-
   function _handleSubmit(values, actions) {
     setSafeformdata(values);
     if (isLastStep) {
       handleContractAndData(safefinaldata);
       _submitForm(values, actions);
     } else {
-      setActiveStep(activeStep + 1)
+      setActiveStep(activeStep + 1);
       actions.setTouched({});
       actions.setSubmitting(false);
     }
@@ -135,57 +139,83 @@ export default function Safe() {
     setActiveStep(activeStep - 1);
   }
 
-
   const handleContractAndData = async (values) => {
     setLoading(true);
     await _sleep(1000);
-    let { money, address, investmentamount, investmentdate, valuationcapnumber, discountnumber, prorate, favoured, companylegalname, companyaddress, country, state, benificial, benificialowner, investortype, investorlegal, authorized, addressoptional } = values;
+    let {
+      money,
+      address,
+      investmentamount,
+      investmentdate,
+      valuationcapnumber,
+      discountnumber,
+      prorate,
+      favoured,
+      companylegalname,
+      companyaddress,
+      country,
+      state,
+      benificial,
+      benificialowner,
+      investortype,
+      investorlegal,
+      authorized,
+      addressoptional,
+    } = values;
     let timestamp = moment().unix();
     let type = 0;
     if (money == "Post-money") {
       type = 1;
     }
-    let ContractDetails = [type, investmentamount, timestamp, valuationcapnumber, discountnumber, prorate, favoured, address, companylegalname];
+    let ContractDetails = [
+      type,
+      investmentamount,
+      timestamp,
+      valuationcapnumber,
+      discountnumber,
+      prorate,
+      favoured,
+      address,
+      companylegalname,
+    ];
     try {
       const data = await contract.call("storeInvestmentDetails", [
         ContractDetails,
       ]);
       console.log("contarct data : ", data);
       const postData = await axios.post("http://localhost:3001/register", {
-        "name": money,
-        "name2": address,
-        "num1": investmentamount,
-        "date": investmentdate,
-        "num2": valuationcapnumber,
-        "num3": discountnumber,
-        "name3": companylegalname,
-        "name4": companyaddress,
-        "name5": country,
-        "name6": state,
-        "name7": benificial,
-        "name8": benificialowner,
-        "name9": investortype,
-        "name10": investorlegal,
-        "name11": MMaddress,
-        "name12": authorized,
-      })
+        name: money,
+        name2: address,
+        num1: investmentamount,
+        date: investmentdate,
+        num2: valuationcapnumber,
+        num3: discountnumber,
+        name3: companylegalname,
+        name4: companyaddress,
+        name5: country,
+        name6: state,
+        name7: benificial,
+        name8: benificialowner,
+        name9: investortype,
+        name10: investorlegal,
+        name11: MMaddress,
+        name12: authorized,
+      });
       console.log("postData : ", postData);
       toast.success("SAFE Created Successfully !", {
         position: toast.POSITION.TOP_RIGHT,
-        autoClose: 2500 ,
+        autoClose: 2500,
       });
       setSafeDisable(false);
-
     } catch (error) {
       setLoading(false);
       setSafeDisable(true);
       toast.error("SAFE creation failed!", {
         position: toast.POSITION.TOP_RIGHT,
-        autoClose: 2500 ,
+        autoClose: 2500,
       });
       console.log(error);
-    }
-    finally {
+    } finally {
       setLoading(false);
     }
   };
@@ -195,27 +225,27 @@ export default function Safe() {
       console.log("hii");
 
       const postData = await axios.post("http://localhost:3001/register", {
-        "name": "money1",
-        "name2": "address",
-        "num1": 3,
-        "date": "Wed Dec 06 2023 00:00:00 GMT+0530 (India Standard Time)",
-        "num2": 5,
-        "num3": 7,
-        "name3": "companylegalname",
-        "name4": "companyaddress",
-        "name5": "country",
-        "name6": "state",
-        "name7": "benificial",
-        "name8": "benificialowner",
-        "name9": "investortype",
-        "name10": "investorlegal",
-        "name11": "MMaddress1",
-        "name12": "authorized"
-      })
+        name: "money1",
+        name2: "address",
+        num1: 3,
+        date: "Wed Dec 06 2023 00:00:00 GMT+0530 (India Standard Time)",
+        num2: 5,
+        num3: 7,
+        name3: "companylegalname",
+        name4: "companyaddress",
+        name5: "country",
+        name6: "state",
+        name7: "benificial",
+        name8: "benificialowner",
+        name9: "investortype",
+        name10: "investorlegal",
+        name11: "MMaddress1",
+        name12: "authorized",
+      });
     } catch (error) {
       console.log(error);
     }
-  }
+  };
 
   return (
     <>
@@ -313,10 +343,11 @@ export default function Safe() {
                         </div>
                       )}
                       <button
-                        className={`${activeStep === item.id
-                          ? "text-white"
-                          : "text-[#3F3F3F]"
-                          } md:text-2xl md:pl-7 pl-6 md:pb-0 pb-4 whitespace-nowrap	text-md font-medium md:leading-10 leading-8`}
+                        className={`${
+                          activeStep === item.id
+                            ? "text-white"
+                            : "text-[#3F3F3F]"
+                        } md:text-2xl md:pl-7 pl-6 md:pb-0 pb-4 whitespace-nowrap	text-md font-medium md:leading-10 leading-8`}
                       >
                         {item.title}
                       </button>
@@ -331,7 +362,7 @@ export default function Safe() {
                     validationSchema={currentValidationSchema}
                     onSubmit={_handleSubmit}
                   >
-                    {({ errors, touched }) => (
+                    {({ errors, touched, values, setFieldValue }) => (
                       <Form>
                         {activeStep === 0 && (
                           <div className="step 1">
@@ -418,7 +449,7 @@ export default function Safe() {
                                   className="input-border shadow-sm inline-flex w-full cursor-pointer items-center align-middle rounded-lg border border-1 px-[20px] md:px-[28px] py-[13px]"
                                 />
                                 {errors.investmentamount &&
-                                  touched.investmentamount ? (
+                                touched.investmentamount ? (
                                   <p className="text-red-500 text-xs mt-2">
                                     {errors.investmentamount}
                                   </p>
@@ -448,7 +479,7 @@ export default function Safe() {
                                   )}
                                 </Field>
                                 {errors.investmentdate &&
-                                  touched.investmentdate ? (
+                                touched.investmentdate ? (
                                   <p className="text-red-500 text-xs mt-2">
                                     {errors.investmentdate}
                                   </p>
@@ -466,17 +497,22 @@ export default function Safe() {
                                     type="checkbox"
                                     id="valuation"
                                     name="valuation"
+                                    checked={values.valuation}
+                                    onChange={(e) => {
+                                      setFieldValue(
+                                        "valuation",
+                                        e.target.checked
+                                      );
+                                      if (e.target.checked) {
+                                        setFieldValue("favoured", false);
+                                      }
+                                    }}
+                                    disabled={values.valuation}
                                     className="sr-only peer"
                                   />
                                   <div className="block mr-3 relative bg-white w-12 h-[22px] p-[2px] rounded-full before:absolute before:bg-[#A9A9A9] before:w-[18px] before:h-[18px] before:p-[2px] before:rounded-full before:transition-all before:duration-500 before:left-1 peer-checked:before:left-7 peer-checked:before:bg-[#8B2DC5]"></div>
                                   Valuation cap
                                 </label>
-
-                                {errors.valuation && touched.valuation ? (
-                                  <p className="text-red-500 text-xs mt-6">
-                                    {errors.valuation}
-                                  </p>
-                                ) : null}
                               </div>
                               <div className="from group">
                                 <Field
@@ -485,7 +521,7 @@ export default function Safe() {
                                   className="input-border shadow-sm inline-flex w-full cursor-pointer items-center align-middle rounded-lg border border-1 px-[20px] md:px-[28px] py-[13px]"
                                 />
                                 {errors.valuationcapnumber &&
-                                  touched.valuationcapnumber ? (
+                                touched.valuationcapnumber ? (
                                   <p className="text-red-500 text-xs mt-2">
                                     {errors.valuationcapnumber}
                                   </p>
@@ -504,16 +540,21 @@ export default function Safe() {
                                     id="discount"
                                     name="discount"
                                     className="sr-only peer"
+                                    checked={values.discount}
+                                    onChange={(e) => {
+                                      setFieldValue(
+                                        "discount",
+                                        e.target.checked
+                                      );
+                                      if (e.target.checked) {
+                                        setFieldValue("favoured", false);
+                                      }
+                                    }}
+                                    disabled={values.discount}
                                   />
                                   <div className="block mr-3 relative bg-white w-12 h-[22px] p-[2px] rounded-full before:absolute before:bg-[#A9A9A9] before:w-[18px] before:h-[18px] before:p-[2px] before:rounded-full before:transition-all before:duration-500 before:left-1 peer-checked:before:left-7 peer-checked:before:bg-[#8B2DC5]"></div>
                                   Discount
                                 </label>
-
-                                {errors.discount && touched.discount ? (
-                                  <p className="text-red-500 text-xs mt-6">
-                                    {errors.discount}
-                                  </p>
-                                ) : null}
                               </div>
                               <div className="from group">
                                 <Field
@@ -522,7 +563,7 @@ export default function Safe() {
                                   className="input-border shadow-sm inline-flex w-full cursor-pointer items-center align-middle rounded-lg border border-1 px-[20px] md:px-[28px] py-[13px]"
                                 />
                                 {errors.discountnumber &&
-                                  touched.discountnumber ? (
+                                touched.discountnumber ? (
                                   <p className="text-red-500 text-xs mt-2">
                                     {errors.discountnumber}
                                   </p>
@@ -548,12 +589,6 @@ export default function Safe() {
                                 <div className="block mr-3 relative bg-white w-12 h-[22px] p-[2px] rounded-full before:absolute before:bg-[#A9A9A9] before:w-[18px] before:h-[18px] before:p-[2px] before:rounded-full before:transition-all before:duration-500 before:left-1 peer-checked:before:left-7 peer-checked:before:bg-[#8B2DC5]"></div>
                                 Pro-Rata Rights Letter
                               </label>
-
-                              {errors.prorate && touched.prorate ? (
-                                <p className="text-red-500 text-xs mt-4">
-                                  {errors.prorate}
-                                </p>
-                              ) : null}
                             </div>
 
                             <div className="from-group mb-6">
@@ -561,21 +596,24 @@ export default function Safe() {
                                 htmlFor="favoured"
                                 className="flex pt-3 leading-5 font-medium text-sm md:text-base"
                               >
-                                <Field
+                                <input
                                   type="checkbox"
                                   id="favoured"
                                   name="favoured"
                                   className="sr-only peer"
+                                  checked={values.favoured}
+                                  onChange={(e) => {
+                                    setFieldValue("favoured", e.target.checked);
+                                    if (e.target.checked) {
+                                      setFieldValue("valuation", false);
+                                      setFieldValue("discount", false);
+                                    }
+                                  }}
+                                  disabled={values.favoured}
                                 />
                                 <div className="block mr-3 relative bg-white w-12 h-[22px] p-[2px] rounded-full before:absolute before:bg-[#A9A9A9] before:w-[18px] before:h-[18px] before:p-[2px] before:rounded-full before:transition-all before:duration-500 before:left-1 peer-checked:before:left-7 peer-checked:before:bg-[#8B2DC5]"></div>
                                 Most-Favoured Nation
                               </label>
-
-                              {errors.favoured && touched.favoured ? (
-                                <p className="text-red-500 text-xs mt-4">
-                                  {errors.favoured}
-                                </p>
-                              ) : null}
                             </div>
                           </div>
                         )}
@@ -595,7 +633,7 @@ export default function Safe() {
                                 className="input-border shadow-sm inline-flex w-full cursor-pointer items-center align-middle rounded-lg border border-1 px-[20px] md:px-[28px] py-[13px]"
                               />
                               {errors.companylegalname &&
-                                touched.companylegalname ? (
+                              touched.companylegalname ? (
                                 <p className="text-red-500 text-xs mt-2">
                                   {errors.companylegalname}
                                 </p>
@@ -615,7 +653,7 @@ export default function Safe() {
                                 className="input-border shadow-sm inline-flex w-full cursor-pointer items-center align-middle rounded-lg border border-1 px-[20px] md:px-[28px] py-[13px]"
                               />
                               {errors.companyaddress &&
-                                touched.companyaddress ? (
+                              touched.companyaddress ? (
                                 <p className="text-red-500 text-xs mt-2">
                                   {errors.companyaddress}
                                 </p>
@@ -858,7 +896,7 @@ export default function Safe() {
                                 </option>
                               </Field>
                               {errors.benificialowner &&
-                                touched.benificialowner ? (
+                              touched.benificialowner ? (
                                 <p className="text-red-500 text-xs mt-2">
                                   {errors.benificialowner}
                                 </p>
@@ -893,21 +931,21 @@ export default function Safe() {
                                   label="Individual"
                                   className="text-[#363637]"
                                 >
-                                 Individual
+                                  Individual
                                 </option>
                                 <option
                                   value="Venture Fund (LP)"
                                   label="Venture Fund (LP)"
                                   className="text-[#363637]"
                                 >
-                                 Venture Fund (LP)
+                                  Venture Fund (LP)
                                 </option>
                                 <option
                                   value="Other Entity (Trust,LLC,Corporation)"
                                   label="Other Entity (Trust,LLC,Corporation)"
                                   className="text-[#363637]"
                                 >
-                                 Other Entity (Trust,LLC,Corporation)
+                                  Other Entity (Trust,LLC,Corporation)
                                 </option>
                               </Field>
                               {errors.investortype && touched.investortype ? (
@@ -1198,63 +1236,66 @@ export default function Safe() {
                           )}
                           {activeStep === 4 && (
                             <>
-                              {loading ? <>
+                              {loading ? (
+                                <>
+                                  <button
+                                    type="submit"
+                                    className="mx-2 inline-flex w-[180px] items-center wallet-button justify-center transition border border-1 text-base font-semibold duration-200 capitalize text-white rounded-lg md:text-base px-[28px] py-[12px] md:px-[28px] md:py-[13px]"
+                                  >
+                                    <Bars
+                                      height="20"
+                                      width="20"
+                                      color="#fff"
+                                      ariaLabel="bars-loading"
+                                      wrapperStyle={{}}
+                                      wrapperClass=""
+                                      visible={true}
+                                    />
+                                  </button>
+                                </>
+                              ) : (
                                 <button
                                   type="submit"
                                   className="mx-2 inline-flex w-[180px] items-center wallet-button justify-center transition border border-1 text-base font-semibold duration-200 capitalize text-white rounded-lg md:text-base px-[28px] py-[12px] md:px-[28px] md:py-[13px]"
                                 >
-                                  <Bars
-                                    height="20"
-                                    width="20"
-                                    color="#fff"
-                                    ariaLabel="bars-loading"
-                                    wrapperStyle={{}}
-                                    wrapperClass=""
-                                    visible={true}
-                                  />
-
+                                  <span className="pr-2">Create SAFE</span>
+                                  <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    width="15"
+                                    height="12"
+                                    viewBox="0 0 15 12"
+                                    fill="none"
+                                  >
+                                    <path
+                                      d="M0.806474 6.62535L0.819926 5.20109L11.517 5.30212L8.22009 1.94238L9.23974 0.941815L14.2426 6.04005L9.14434 11.0429L8.14377 10.0232L11.5035 6.72637L0.806474 6.62535Z"
+                                      fill="#825EAE"
+                                    />
+                                  </svg>
                                 </button>
-                              </> : <button
-                                type="submit"
-                                className="mx-2 inline-flex w-[180px] items-center wallet-button justify-center transition border border-1 text-base font-semibold duration-200 capitalize text-white rounded-lg md:text-base px-[28px] py-[12px] md:px-[28px] md:py-[13px]"
-                              >
-                                <span className="pr-2">Create SAFE</span>
-                                <svg
-                                  xmlns="http://www.w3.org/2000/svg"
-                                  width="15"
-                                  height="12"
-                                  viewBox="0 0 15 12"
-                                  fill="none"
+                              )}
+
+                              <Link href="/">
+                                {" "}
+                                <button
+                                  disabled={safeDisable}
+                                  type="submit"
+                                  className="inline-flex  items-center wallet-button justify-center transition border border-1 text-base font-semibold duration-200 capitalize text-white rounded-lg md:text-base px-[28px] py-[12px] md:px-[25px] md:py-[13px]"
                                 >
-                                  <path
-                                    d="M0.806474 6.62535L0.819926 5.20109L11.517 5.30212L8.22009 1.94238L9.23974 0.941815L14.2426 6.04005L9.14434 11.0429L8.14377 10.0232L11.5035 6.72637L0.806474 6.62535Z"
-                                    fill="#825EAE"
-                                  />
-                                </svg>
-                              </button>}
-
-
-                              <Link href="/"> <button
-                                disabled={safeDisable}
-                                type="submit"
-                                className="inline-flex  items-center wallet-button justify-center transition border border-1 text-base font-semibold duration-200 capitalize text-white rounded-lg md:text-base px-[28px] py-[12px] md:px-[25px] md:py-[13px]"
-                              >
-                                <span className="pr-2">Create more SAFE</span>
-                                <svg
-                                  xmlns="http://www.w3.org/2000/svg"
-                                  width="15"
-                                  height="12"
-                                  viewBox="0 0 15 12"
-                                  fill="none"
-                                >
-                                  <path
-                                    d="M0.806474 6.62535L0.819926 5.20109L11.517 5.30212L8.22009 1.94238L9.23974 0.941815L14.2426 6.04005L9.14434 11.0429L8.14377 10.0232L11.5035 6.72637L0.806474 6.62535Z"
-                                    fill="#825EAE"
-                                  />
-                                </svg>
-                              </button></Link>
-
-
+                                  <span className="pr-2">Create more SAFE</span>
+                                  <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    width="15"
+                                    height="12"
+                                    viewBox="0 0 15 12"
+                                    fill="none"
+                                  >
+                                    <path
+                                      d="M0.806474 6.62535L0.819926 5.20109L11.517 5.30212L8.22009 1.94238L9.23974 0.941815L14.2426 6.04005L9.14434 11.0429L8.14377 10.0232L11.5035 6.72637L0.806474 6.62535Z"
+                                      fill="#825EAE"
+                                    />
+                                  </svg>
+                                </button>
+                              </Link>
                             </>
                           )}
                         </div>

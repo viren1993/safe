@@ -15,12 +15,12 @@ export default [
       // .max(100, "Too Long!")
       .required("This field is required"),
     investmentdate: Yup.date().required("This field is required"),
-    valuation: Yup.bool().oneOf([true], "This field is required"),
+    // valuation: Yup.bool().oneOf([true], "This field is required"),
     valuationcapnumber: Yup.number().integer().required("This field is required"),
-    discount: Yup.bool().oneOf([true], "This field is required"),
+    // discount: Yup.bool().oneOf([true], "This field is required"),
     discountnumber: Yup.number().min(1, "Too Short!").max(100, "Too Long!").required("This field is required"),
-    prorate: Yup.bool().oneOf([true], "This field is required"),
-    favoured: Yup.bool().oneOf([true], "This field is required"),
+    // prorate: Yup.bool().oneOf([true], "This field is required"),
+    // favoured: Yup.bool().oneOf([true], "This field is required"),
   }),
   Yup.object().shape({
     companylegalname: Yup.string().required("This field is required"),
