@@ -19,7 +19,6 @@ export default function Home() {
         ]}
         activeChain="mumbai" clientId="236a1a86c9c96ae3cd24222c2739d141">
         <Header />
-        {/* <div className="border circle rounded-full" /> */}
         <div className="mx-auto py-[100px] lg:py-20 relative hero-section-bg">
           <div className="md:mb-8 mb-4 flex justify-center">
             <span className="font-medium items-center border-1 tracking-normal border-[#363637] bg-[#191028] rounded-full px-6 py-2 text-xs md:text-base">
