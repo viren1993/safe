@@ -377,12 +377,12 @@ export default function Safe() {
                                 />
                                 <label
                                   htmlFor="premoney"
-                                  className="font-medium pr-[30px] items-center text-white rounded-full text-sm md:text-base"
+                                  className="font-medium whitespace-nowrap pr-2 md:pr-[30px] items-center text-white rounded-full text-sm md:text-base"
                                 >
                                   Pre-money
                                 </label>
                               </div>
-                              <span className="text-sm">
+                              <span className="text-sm text-right md:text-left">
                                 Before cash investment
                               </span>
                             </div>
@@ -399,12 +399,12 @@ export default function Safe() {
 
                                 <label
                                   htmlFor="postmoney"
-                                  className="font-medium pr-[30px] items-center text-white rounded-full text-sm md:text-base"
+                                  className="font-medium whitespace-nowrap pr-2 md:pr-[30px] items-center text-white rounded-full text-sm md:text-base"
                                 >
                                   Post-money
                                 </label>
                               </div>
-                              <span className="text-sm">
+                              <span className="text-sm text-right md:text-left">
                                 After cash investment
                               </span>
                             </div>
@@ -485,10 +485,10 @@ export default function Safe() {
                                   </p>
                                 ) : null}
                               </div>
-                            </div>
+                            </div>                            
 
-                            <div className="flex flex-nowrap gap-5 mb-3">
-                              <div className="from-group h-[50px] w-[50%] items-center">
+                            <div className="grid grid-cols-2 grid-rows-1 gap-4 mb-3">
+                              <div className="from-group items-center">
                                 <label
                                   htmlFor="valuation"
                                   className="flex pt-3 leading-5 font-medium text-sm md:text-base whitespace-nowrap"
@@ -529,8 +529,8 @@ export default function Safe() {
                               </div>
                             </div>
 
-                            <div className="flex flex-nowrap mb-3 gap-4">
-                              <div className="from-group h-[50px] w-[50%] items-center mr-8 md:mr-1">
+                            <div className="grid grid-cols-2 grid-rows-1 gap-4 mb-3">
+                              <div className="from-group items-center">
                                 <label
                                   htmlFor="discount"
                                   className="flex pt-3 leading-5 font-medium text-sm md:text-base"
