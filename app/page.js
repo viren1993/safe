@@ -2,12 +2,11 @@
 
 import Link from "next/link";
 import Header from "./components/header";
-import { ThirdwebProvider } from "@thirdweb-dev/react";
-
 import {
   metamaskWallet,
   walletConnect,
   trustWallet,
+  ThirdwebProvider
 } from "@thirdweb-dev/react";
 
 export default function Home() {
