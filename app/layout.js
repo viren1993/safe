@@ -7,7 +7,7 @@ import {
   walletConnect,
   trustWallet,
 } from "@thirdweb-dev/react";
-import { ThirdwebProvider } from "./components/ThirdwebProvider";
+import { ThirdwebProvider } from '@thirdweb-dev/react';
 const jakarta = Plus_Jakarta_Sans({ subsets: ['latin'] })
 
 const metadata = {
