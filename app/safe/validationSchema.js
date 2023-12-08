@@ -7,12 +7,12 @@ export default [
   Yup.object().shape({
     money: Yup.string().required("This field is required"),
     address: Yup.string()
-      .min(45, "Too Short!")
-      .max(45, "Too Long!")
+      .min(32, "Too Short!")
+      // .max(45, "Too Long!")
       .required("This field is required"),
     investmentamount: Yup.number()
-      .min(2, "Too Short!")
-      .max(10, "Too Long!")
+      .min(1, "Too Short!")
+      // .max(100, "Too Long!")
       .required("This field is required"),
     investmentdate: Yup.date().required("This field is required"),
     valuation: Yup.bool().oneOf([true], "This field is required"),
