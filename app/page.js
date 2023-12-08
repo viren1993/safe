@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import Header from "./components/header";
-import { ThirdwebProvider } from "./components/ThirdwebProvider";
+import { ThirdwebProvider } from "@thirdweb-dev/react";
 
 import {
   metamaskWallet,
@@ -13,12 +13,12 @@ import {
 export default function Home() {
   return (
     <>
-      {/* <ThirdwebProvider supportedWallets={[
+      <ThirdwebProvider supportedWallets={[
           metamaskWallet(),
           walletConnect(),
           trustWallet(),
         ]}
-        activeChain="mumbai" clientId="236a1a86c9c96ae3cd24222c2739d141"> */}
+        activeChain="mumbai" clientId="236a1a86c9c96ae3cd24222c2739d141">
         <Header />
         {/* <div className="border circle rounded-full" /> */}
         <div className="mx-auto py-[100px] lg:py-20 relative hero-section-bg">
@@ -50,7 +50,7 @@ export default function Home() {
             </button>
           </div>
         </div>
-      {/* </ThirdwebProvider> */}
+      </ThirdwebProvider>
     </>
   );
 }
