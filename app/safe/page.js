@@ -491,7 +491,7 @@ export default function Safe() {
                               <div className="from-group items-center">
                                 <label
                                   htmlFor="valuation"
-                                  className="flex pt-3 leading-5 font-medium text-sm md:text-base whitespace-nowrap"
+                                  className="flex pt-3 leading-5 font-medium text-sm md:text-base"
                                 >
                                   <Field
                                     type="checkbox"
@@ -507,7 +507,7 @@ export default function Safe() {
                                         setFieldValue("favoured", false);
                                       }
                                     }}
-                                    disabled={values.valuation}
+                                    disabled={values.favoured === true}
                                     className="sr-only peer"
                                   />
                                   <div className="block mr-3 relative bg-white w-12 h-[22px] p-[2px] rounded-full before:absolute before:bg-[#A9A9A9] before:w-[18px] before:h-[18px] before:p-[2px] before:rounded-full before:transition-all before:duration-500 before:left-1 peer-checked:before:left-7 peer-checked:before:bg-[#8B2DC5]"></div>
@@ -550,7 +550,7 @@ export default function Safe() {
                                         setFieldValue("favoured", false);
                                       }
                                     }}
-                                    disabled={values.discount}
+                                    disabled={values.favoured === true}
                                   />
                                   <div className="block mr-3 relative bg-white w-12 h-[22px] p-[2px] rounded-full before:absolute before:bg-[#A9A9A9] before:w-[18px] before:h-[18px] before:p-[2px] before:rounded-full before:transition-all before:duration-500 before:left-1 peer-checked:before:left-7 peer-checked:before:bg-[#8B2DC5]"></div>
                                   Discount
