@@ -255,7 +255,7 @@ export default function Safe() {
         clientId="236a1a86c9c96ae3cd24222c2739d141"
       >
         <ToastContainer />
-        <header className="flex px-9 md:px-[64px] h-16 w-ful md:flex md:items-center lg:h-[72px] 2xl:h-20 4xl:h-24">
+        <header className="flex px-7 md:px-[64px] h-16 w-ful md:flex md:items-center lg:h-[72px] 2xl:h-20 4xl:h-24">
           <div className="container flex ">
             <div className="flex items-center justify-between mt-5 w-full">
               <Link
@@ -319,7 +319,7 @@ export default function Safe() {
             </div>
           </div>
         </header>
-        <main className="flex-grow px-9 md:px-[64px]">
+        <main className="flex-grow px-7 md:px-[64px]">
           <div className="container-fluid mb-12 pt-6 lg:mb-16">
             <div className="grid grid-cols-1 gap-8 xl:grid-cols-[330px_5fr] 3xl:gap-12">
               <div className="block pl-3 relative">
@@ -366,7 +366,7 @@ export default function Safe() {
                       <Form>
                         {activeStep === 0 && (
                           <div className="step 1">
-                            <div className="flex input-border justify-between relative cursor-pointer mb-3 items-center rounded-lg border border-1 px-[20px] md:px-[28px] py-[13px]">
+                            <div className="flex input-border justify-between relative cursor-pointer mb-3 items-center rounded-lg border border-1 px-[14px] md:px-[28px] py-[13px]">
                               <div className="flex items-center">
                                 <Field
                                   name="money"
@@ -387,7 +387,7 @@ export default function Safe() {
                               </span>
                             </div>
 
-                            <div className="flex input-border justify-between relative cursor-pointer items-center rounded-lg border border-1 px-[20px] md:px-[28px] py-[13px]">
+                            <div className="flex input-border justify-between relative cursor-pointer items-center rounded-lg border border-1 px-[14px] md:px-[28px] py-[13px]">
                               <div className="flex items-center">
                                 <Field
                                   id="postmoney"
@@ -425,7 +425,7 @@ export default function Safe() {
                                 type="text"
                                 name="address"
                                 id="address"
-                                className="input-border shadow-sm inline-flex w-full cursor-pointer items-center align-middle rounded-lg border border-1 px-[20px] md:px-[28px] py-[13px]"
+                                className="input-border shadow-sm inline-flex w-full cursor-pointer items-center align-middle rounded-lg border border-1 px-[14px] md:px-[28px] py-[13px]"
                               />
                               {errors.address && touched.address ? (
                                 <p className="text-red-500 text-xs mt-2">
@@ -446,7 +446,7 @@ export default function Safe() {
                                   type="number"
                                   name="investmentamount"
                                   id="investmentamount"
-                                  className="input-border shadow-sm inline-flex w-full cursor-pointer items-center align-middle rounded-lg border border-1 px-[20px] md:px-[28px] py-[13px]"
+                                  className="input-border shadow-sm inline-flex w-full cursor-pointer items-center align-middle rounded-lg border border-1 px-[14px] md:px-[28px] py-[13px]"
                                 />
                                 {errors.investmentamount &&
                                 touched.investmentamount ? (
@@ -462,10 +462,10 @@ export default function Safe() {
                                 >
                                   Investment Date
                                 </label>
-                                <Field name="investmentdate">
+                                <Field name="investmentdate" className="w-full">
                                   {({ field, form }) => (
                                     <DatePicker
-                                      className="w-full input-border shadow-sm inline-flex cursor-pointer items-center align-middle rounded-lg border border-1 px-[20px] md:px-[28px] py-[13px]"
+                                      className="w-full input-border shadow-sm inline-flex cursor-pointer items-center align-middle rounded-lg border border-1 px-[14px] md:px-[28px] py-[13px]"
                                       id="investmentdate"
                                       {...field}
                                       selected={field.value}
@@ -487,11 +487,11 @@ export default function Safe() {
                               </div>
                             </div>
 
-                            <div className="flex flex-nowrap mb-3">
-                              <div className="from-group  mr-[38px] h-[50px] w-[50%] items-center">
+                            <div className="flex flex-nowrap gap-5 mb-3">
+                              <div className="from-group h-[50px] w-[50%] items-center">
                                 <label
                                   htmlFor="valuation"
-                                  className="flex pt-3 leading-5 font-medium text-sm md:text-base"
+                                  className="flex pt-3 leading-5 font-medium text-sm md:text-base whitespace-nowrap"
                                 >
                                   <Field
                                     type="checkbox"
@@ -518,7 +518,7 @@ export default function Safe() {
                                 <Field
                                   type="number"
                                   name="valuationcapnumber"
-                                  className="input-border shadow-sm inline-flex w-full cursor-pointer items-center align-middle rounded-lg border border-1 px-[20px] md:px-[28px] py-[13px]"
+                                  className="input-border shadow-sm inline-flex w-full cursor-pointer items-center align-middle rounded-lg border border-1 px-[14px] md:px-[28px] py-[13px]"
                                 />
                                 {errors.valuationcapnumber &&
                                 touched.valuationcapnumber ? (
@@ -529,8 +529,8 @@ export default function Safe() {
                               </div>
                             </div>
 
-                            <div className="flex flex-nowrap mb-3">
-                              <div className="from-group  mr-[38px] h-[50px] w-[50%] items-center">
+                            <div className="flex flex-nowrap mb-3 gap-4">
+                              <div className="from-group h-[50px] w-[50%] items-center mr-8 md:mr-1">
                                 <label
                                   htmlFor="discount"
                                   className="flex pt-3 leading-5 font-medium text-sm md:text-base"
@@ -560,7 +560,7 @@ export default function Safe() {
                                 <Field
                                   type="number"
                                   name="discountnumber"
-                                  className="input-border shadow-sm inline-flex w-full cursor-pointer items-center align-middle rounded-lg border border-1 px-[20px] md:px-[28px] py-[13px]"
+                                  className="input-border shadow-sm inline-flex w-full cursor-pointer items-center align-middle rounded-lg border border-1 px-[14px] md:px-[28px] py-[13px]"
                                 />
                                 {errors.discountnumber &&
                                 touched.discountnumber ? (
@@ -630,7 +630,7 @@ export default function Safe() {
                                 type="text"
                                 name="companylegalname"
                                 id="companylegalname"
-                                className="input-border shadow-sm inline-flex w-full cursor-pointer items-center align-middle rounded-lg border border-1 px-[20px] md:px-[28px] py-[13px]"
+                                className="input-border shadow-sm inline-flex w-full cursor-pointer items-center align-middle rounded-lg border border-1 px-[14px] md:px-[28px] py-[13px]"
                               />
                               {errors.companylegalname &&
                               touched.companylegalname ? (
@@ -650,7 +650,7 @@ export default function Safe() {
                                 type="text"
                                 name="companyaddress"
                                 id="companyaddress"
-                                className="input-border shadow-sm inline-flex w-full cursor-pointer items-center align-middle rounded-lg border border-1 px-[20px] md:px-[28px] py-[13px]"
+                                className="input-border shadow-sm inline-flex w-full cursor-pointer items-center align-middle rounded-lg border border-1 px-[14px] md:px-[28px] py-[13px]"
                               />
                               {errors.companyaddress &&
                               touched.companyaddress ? (
@@ -673,7 +673,7 @@ export default function Safe() {
                                     as="select"
                                     id="country"
                                     name="country"
-                                    className="block bg-[#3d246617] border-[#363637] fouce:border-[#363637] w-full rounded-md border-0 shadow-sm ring-1 ring-inset px-[20px] md:px-[28px] py-[13px] focus:ring-2 ring-[#363637] focus:ring-inset focus:ring-[#363637] sm:max-w-xs sm:text-sm sm:leading-6"
+                                    className="block bg-[#3d246617] border-[#363637] fouce:border-[#363637] w-full rounded-md border-0 shadow-sm ring-1 ring-inset px-[14px] md:px-[28px] py-[13px] focus:ring-2 ring-[#363637] focus:ring-inset focus:ring-[#363637] sm:max-w-xs sm:text-sm sm:leading-6"
                                   >
                                     <option value="" label="Select a country">
                                       {" "}
@@ -762,7 +762,7 @@ export default function Safe() {
                                     as="select"
                                     id="state"
                                     name="state"
-                                    className="block bg-[#3d246617] border-[#363637] fouce:border-[#363637] w-full rounded-md border-0 shadow-sm ring-1 ring-inset px-[20px] md:px-[28px] py-[13px] focus:ring-2 ring-[#363637] focus:ring-inset focus:ring-[#363637] sm:max-w-xs sm:text-sm sm:leading-6"
+                                    className="block bg-[#3d246617] border-[#363637] fouce:border-[#363637] w-full rounded-md border-0 shadow-sm ring-1 ring-inset px-[14px] md:px-[28px] py-[13px] focus:ring-2 ring-[#363637] focus:ring-inset focus:ring-[#363637] sm:max-w-xs sm:text-sm sm:leading-6"
                                   >
                                     <option value="" label="Select a state">
                                       Select a country
@@ -853,7 +853,7 @@ export default function Safe() {
                               <Field
                                 type="text"
                                 name="benificial"
-                                className="input-border shadow-sm inline-flex w-full cursor-pointer items-center align-middle rounded-lg border border-1 px-[20px] md:px-[28px] py-[13px]"
+                                className="input-border shadow-sm inline-flex w-full cursor-pointer items-center align-middle rounded-lg border border-1 px-[14px] md:px-[28px] py-[13px]"
                               />
                               {errors.benificial && touched.benificial ? (
                                 <p className="text-red-500 text-xs mt-2">
@@ -872,7 +872,7 @@ export default function Safe() {
                                 as="select"
                                 id="benificialowner"
                                 name="benificialowner"
-                                className="block bg-[#3d246617] border-[#363637] fouce:border-[#363637] w-full rounded-md border-0 shadow-sm ring-1 ring-inset px-[20px] md:px-[28px] py-[13px] focus:ring-2 ring-[#363637] focus:ring-inset focus:ring-[#363637] sm:max-w-xs sm:text-sm sm:leading-6"
+                                className="block bg-[#3d246617] border-[#363637] fouce:border-[#363637] w-full rounded-md border-0 shadow-sm ring-1 ring-inset px-[14px] md:px-[28px] py-[13px] focus:ring-2 ring-[#363637] focus:ring-inset focus:ring-[#363637] sm:max-w-xs sm:text-sm sm:leading-6"
                               >
                                 <option
                                   value=""
@@ -917,7 +917,7 @@ export default function Safe() {
                                 as="select"
                                 id="investortype"
                                 name="investortype"
-                                className="block bg-[#3d246617] border-[#363637] fouce:border-[#363637] w-full rounded-md border-0 shadow-sm ring-1 ring-inset px-[20px] md:px-[28px] py-[13px] focus:ring-2 ring-[#363637] focus:ring-inset focus:ring-[#363637] sm:max-w-xs sm:text-sm sm:leading-6"
+                                className="block bg-[#3d246617] border-[#363637] fouce:border-[#363637] w-full rounded-md border-0 shadow-sm ring-1 ring-inset px-[14px] md:px-[28px] py-[13px] focus:ring-2 ring-[#363637] focus:ring-inset focus:ring-[#363637] sm:max-w-xs sm:text-sm sm:leading-6"
                               >
                                 <option
                                   value=""
@@ -965,7 +965,7 @@ export default function Safe() {
                                 type="text"
                                 name="investorlegal"
                                 id="investorlegal"
-                                className="input-border shadow-sm inline-flex w-full focus:ring-2 focus:ring-inset focus:ring-[#f0e9e9] cursor-pointer items-center align-middle rounded-lg border border-1 px-[20px] md:px-[28px] py-[13px]"
+                                className="input-border shadow-sm inline-flex w-full focus:ring-2 focus:ring-inset focus:ring-[#f0e9e9] cursor-pointer items-center align-middle rounded-lg border border-1 px-[14px] md:px-[28px] py-[13px]"
                               />
                               {errors.investorlegal && touched.investorlegal ? (
                                 <p className="text-red-500 text-xs mt-2">
@@ -984,7 +984,7 @@ export default function Safe() {
                                 type="text"
                                 name="authorized"
                                 id="authorized"
-                                className="input-border shadow-sm inline-flex w-full focus:ring-2 focus:ring-inset focus:ring-[#f0e9e9] cursor-pointer items-center align-middle rounded-lg border border-1 px-[20px] md:px-[28px] py-[13px]"
+                                className="input-border shadow-sm inline-flex w-full focus:ring-2 focus:ring-inset focus:ring-[#f0e9e9] cursor-pointer items-center align-middle rounded-lg border border-1 px-[14px] md:px-[28px] py-[13px]"
                               />
                               {errors.authorized && touched.authorized ? (
                                 <p className="text-red-500 text-xs mt-2">
@@ -1003,7 +1003,7 @@ export default function Safe() {
                                 type="text"
                                 name="signatory"
                                 id="signatory"
-                                className="input-border shadow-sm inline-flex w-full focus:ring-2 focus:ring-inset focus:ring-[#f0e9e9] cursor-pointer items-center align-middle rounded-lg border border-1 px-[20px] md:px-[28px] py-[13px]"
+                                className="input-border shadow-sm inline-flex w-full focus:ring-2 focus:ring-inset focus:ring-[#f0e9e9] cursor-pointer items-center align-middle rounded-lg border border-1 px-[14px] md:px-[28px] py-[13px]"
                               />
                             </div>
                             <div className="col-span-full mb-3">
@@ -1018,7 +1018,7 @@ export default function Safe() {
                                 as="textarea"
                                 name="addressoptional"
                                 id="addressoptional"
-                                className="input-border shadow-sm inline-flex w-full focus:ring-2 focus:ring-inset focus:ring-[#f0e9e9] cursor-pointer items-center align-middle rounded-lg border border-1 px-[20px] md:px-[28px] py-[13px]"
+                                className="input-border shadow-sm inline-flex w-full focus:ring-2 focus:ring-inset focus:ring-[#f0e9e9] cursor-pointer items-center align-middle rounded-lg border border-1 px-[14px] md:px-[28px] py-[13px]"
                               />
                             </div>
                             <div className="col-span-full mb-3">
@@ -1033,7 +1033,7 @@ export default function Safe() {
                                 type="text"
                                 name="bylines"
                                 id="bylines"
-                                className="input-border shadow-sm inline-flex w-full focus:ring-2 focus:ring-inset focus:ring-[#f0e9e9] cursor-pointer items-center align-middle rounded-lg border border-1 px-[20px] md:px-[28px] py-[13px]"
+                                className="input-border shadow-sm inline-flex w-full focus:ring-2 focus:ring-inset focus:ring-[#f0e9e9] cursor-pointer items-center align-middle rounded-lg border border-1 px-[14px] md:px-[28px] py-[13px]"
                               />
                             </div>
                           </div>
