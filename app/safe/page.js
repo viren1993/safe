@@ -75,6 +75,7 @@ export default function Safe() {
   const [startdate, setStartdate] = useState(null);
   const [safeformdata, setSafeformdata] = useState(null);
   const [safefinaldata, setSafefinaldata] = useState(null);
+  console.log(safefinaldata, 'safefinaldata')
   const [safeDisable, setSafeDisable] = useState(true);
   const [loading, setLoading] = useState(false);
 
@@ -442,12 +443,15 @@ export default function Safe() {
                                 >
                                   Investment Amount
                                 </label>
-                                <Field
-                                  type="number"
-                                  name="investmentamount"
-                                  id="investmentamount"
-                                  className="input-border shadow-sm inline-flex w-full cursor-pointer items-center align-middle rounded-lg border border-1 px-[14px] md:px-[28px] py-[13px]"
-                                />
+                                <div className="relative flex items-center">
+                                  <span className="absolute left-4">$</span>
+                                  <Field
+                                    type="number"
+                                    name="investmentamount"
+                                    id="investmentamount"
+                                    className="input-border shadow-sm inline-flex w-full cursor-pointer items-center align-middle rounded-lg border border-1 pl-[28px] pr-[20px] md:pl-[28px] md:pr-[28px] py-[13px]"
+                                  />
+                                </div>
                                 {errors.investmentamount &&
                                 touched.investmentamount ? (
                                   <p className="text-red-500 text-xs mt-2">
@@ -473,7 +477,7 @@ export default function Safe() {
                                         form.setFieldValue(field.name, date);
                                         setStartdate(date);
                                       }}
-                                      dateFormat="MMMM d, yyyy"
+                                      dateFormat="MMMM d,&nbsp; yyyy"
                                       name="investmentdate"
                                     />
                                   )}
@@ -485,7 +489,7 @@ export default function Safe() {
                                   </p>
                                 ) : null}
                               </div>
-                            </div>                            
+                            </div>
 
                             <div className="grid grid-cols-2 grid-rows-1 gap-4 mb-3">
                               <div className="from-group items-center">
@@ -515,11 +519,15 @@ export default function Safe() {
                                 </label>
                               </div>
                               <div className="from group">
-                                <Field
-                                  type="number"
-                                  name="valuationcapnumber"
-                                  className="input-border shadow-sm inline-flex w-full cursor-pointer items-center align-middle rounded-lg border border-1 px-[14px] md:px-[28px] py-[13px]"
-                                />
+                                <div className="relative flex items-center">
+                                  <span className="absolute left-4">$</span>
+                                  <Field
+                                    type="number"
+                                    name="valuationcapnumber"
+                                    id="valuationcapnumber"
+                                    className="input-border shadow-sm inline-flex w-full cursor-pointer items-center align-middle rounded-lg border border-1 pl-[28px] pr-[20px] md:pl-[28px] md:pr-[28px] py-[13px]"
+                                  />
+                                </div>
                                 {errors.valuationcapnumber &&
                                 touched.valuationcapnumber ? (
                                   <p className="text-red-500 text-xs mt-2">
@@ -557,11 +565,15 @@ export default function Safe() {
                                 </label>
                               </div>
                               <div className="from group">
-                                <Field
-                                  type="number"
-                                  name="discountnumber"
-                                  className="input-border shadow-sm inline-flex w-full cursor-pointer items-center align-middle rounded-lg border border-1 px-[14px] md:px-[28px] py-[13px]"
-                                />
+                                <div className="relative flex items-center">
+                                  <span className="absolute left-4">%</span>
+                                  <Field
+                                    type="number"
+                                    name="discountnumber"
+                                    id="discountnumber"
+                                    className="input-border shadow-sm inline-flex w-full cursor-pointer items-center align-middle rounded-lg border border-1 pl-[32px] pr-[20px] md:pl-[33px] md:pr-[28px] py-[13px]"
+                                  />
+                                </div>
                                 {errors.discountnumber &&
                                 touched.discountnumber ? (
                                   <p className="text-red-500 text-xs mt-2">
@@ -1070,7 +1082,7 @@ export default function Safe() {
                                     Pro-Rata{" "}
                                   </p>
                                   <p className="text-sm text-white font-extrabold inline-flex">
-                                    {safefinaldata.valuation}
+                                    {safefinaldata?.valuation}
                                   </p>
                                 </div>
                                 <div className="basis-[20%] flex flex-col">
@@ -1078,7 +1090,7 @@ export default function Safe() {
                                     MFN{" "}
                                   </p>
                                   <p className="text-sm text-white font-extrabold inline-flex">
-                                    {safefinaldata.favoured}
+                                    {safefinaldata?.favoured}
                                   </p>
                                 </div>
                               </div>
@@ -1096,7 +1108,7 @@ export default function Safe() {
                               </div>
                               <div className="col-span-4">
                                 <p className="font-medium text-base">
-                                  Arthur Rock
+                                {safefinaldata?.authorized}
                                 </p>
                               </div>
                               <div className="col-span-8 col-start-6">
